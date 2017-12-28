@@ -4,7 +4,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
 import './App.css';
-import Spotify from "../../util/spotify"
+import Spotify from "../../util/Spotify"
 
 class App extends Component {
   constructor(props){
@@ -18,7 +18,15 @@ class App extends Component {
     this.removeTrack = this.removeTrack.bind(this);
     this.updatePlaylistName = this.updatePlaylistName.bind(this);
     this.savePlaylist = this.savePlaylist.bind(this);
+    this.search = this.search.bind(this);
   }
+
+  search(term) {
+    Spotify.search(term).then(searchResults => {
+      this.setState({ searchResults: searchResults });
+    });
+  }
+
 
   savePlaylist() {
     const trackUris = this.state.playlistTracks.map(track => track.uri);
@@ -55,7 +63,7 @@ class App extends Component {
       <div>
         <h1>Ja<span className="highlight">mmm</span>ing</h1>
           <div className="App">
-            {/*<!-- Add a SearchBar component -->*/}
+            <SearchBar onSearch={this.search} />
             <div className="App-playlist">
             <searchResults searchResults={this.state.searchResults}
                 onAdd={this.addTrack} />
