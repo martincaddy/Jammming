@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import logo from './logo.svg';
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
@@ -65,10 +64,12 @@ class App extends Component {
           <div className="App">
             <SearchBar onSearch={this.search} />
             <div className="App-playlist">
-            <searchResults searchResults={this.state.searchResults}
+            <SearchResults searchResults={this.state.searchResults}
                 onAdd={this.addTrack} />
-            <playlistName playlistName={this.state.playlistName}/>
-            <playlistTracks playlistTracks={this.state.playlistTracks}/>
+                <Playlist playlistTracks={this.state.playlistTracks}
+                  onNameChange={this.updatePlaylistName}
+                  onRemove={this.removeTrack}
+                  onSave={this.savePlaylist} />
               </div>
             </div>
           </div>
