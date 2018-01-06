@@ -10,7 +10,7 @@ class App extends Component {
     super(props);
     this.state = {
       searchResults: [],
-      playlistName: "New Playlist",
+      playlistName: [],
       playlistTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
@@ -50,11 +50,20 @@ class App extends Component {
   }
 
   addTrack(track) {
-    let tracks = this.state.playlistTracks;
-    tracks.push(track);
-    this.setState({ playlistTracks: tracks });
+    // Find whether the track just passed is in the playlistTracks array or not.
+    // .find() returns the value of the first element that satisfies the condition.
+    // Otherwise it returns undefined (falsy).
+    let inPlaylist = this.state.playlistTracks.find(trackObj => trackObj.id === track.id);
+    if (!inPlaylist) {
+      // Take the current state (prevState) and .push() the track we want to add.
+      // .push() modifies the array and returns the new length of the array.
+      // Assign the modified state to playlistTracks and re-render the playlistTracks.
+      this.setState(function(prevState, props) {
+        prevState.playlistTracks.push(track);
+        return {playlistTracks: prevState.playlistTracks}
+      });
+    }
   }
-
 
 
   render() {
